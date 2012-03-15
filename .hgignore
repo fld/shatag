@@ -1,0 +1,6 @@
+syntax: glob
+.git
+*.pyc
+build/
+shatag.egg-info/
+dist/
