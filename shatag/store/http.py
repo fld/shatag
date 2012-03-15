@@ -17,6 +17,12 @@ class HTTPStore(shatag.base.IStore):
         super().__init__(url, name)
         self.session = requests.session(verify=verify)
         self.buffer = []
+        try:
+            version = self.get(url)['shatag-version']
+            if version != '1':
+                raise Exception('Configured URL uses incompatible protocol version {0}: {1}'.format(version,url))
+        except:
+            raise Exception('Configured URL does not answer like a shatag endpoint: {0}'.format(url))
 
     def get(self,url):
         return json.loads(self.session.get(url, prefetch=True).text)
@@ -34,12 +40,13 @@ class HTTPStore(shatag.base.IStore):
         self.checkname(name)
         self.buffer.append({'path':path, 'hash':hash})
 
-    def clear(self,base,name):
-        self.checkname(name)
+    def clear(self,base,name=None):
+        if name is not None:
+            self.checkname(name)
         self.buffer.append({'clear': base})
 
     def commit(self):
-        self.session.post(self.url + '/host/' + self.name, json.dumps(self.buffer))
+        self.session.post(self.url + '/host/' + self.name, json.dumps(self.buffer)).raise_for_status()
         self.buffer = []
 
     def rollback(self):
