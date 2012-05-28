@@ -33,13 +33,13 @@ def hashfile (filename):
 class NoChecksum(Exception):
     pass
 
-class IFile:
+class IFile(object):
     """Represents an abstract checksummed file in the FS."""
     def __init__(self, filename, db=None):
         """Creates a file object. This will load the corresponding timestamp and xattrs from the filesystem."""
         self.filename = filename 
         self.db = db
-        self.mtime = int(os.stat(filename).st_mtime)
+        self.mtime = float(os.stat(filename).st_mtime)
 
         self.ts = None
         self.shatag = None
@@ -90,10 +90,12 @@ class IFile:
             print('<outdated>  {0}'.format(self.path(canonical)), file=sys.stderr)
 
 
-    def rehash(self):
+    def rehash(self, canonical=False):
         """Rehash the file and store the new checksum and timestamp"""
         self.ts = self.mtime
         newsum = hashfile(self.filename)
+        if self.state == 'good' and newsum != self.shatag:
+            print('<invalid>  {0}'.format(self.path(canonical)), file=sys.stderr)
         self.shatag = newsum
         self.write()
         self.state = 'good'
@@ -125,7 +127,7 @@ def Store(url=None, name=None):
             from shatag.store.sqlite import LocalStore
             return LocalStore(url, name)
 
-class IStore:
+class IStore(object):
     def __init__(self, url=None, name=None):
         if name is None:
             name = chost()            
@@ -193,7 +195,7 @@ class SQLStore(IStore):
     def rollback(self):
         self.db.rollback()
 
-class StoreResult:
+class StoreResult(object):
     def __init__(self,file,remote,local):
         self.file = file
         self.remote = remote
@@ -217,7 +219,7 @@ class StoreResult:
 
         return prefix + self.file.filename + "\x1b[0m"
 
-class Config:
+class Config(object):
     def __init__(self):
 
         self.database = None

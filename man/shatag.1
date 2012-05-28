@@ -54,7 +54,8 @@ When running with
 .B -t
 or
 .B -u
-, recompute the checksum even if the file modification has not changed.
+, recompute the checksum even if the file modification time has not changed. If the old
+checksum differs, report the file as corrupted.
 
 .IP "\fB\-h, \-\-help\fP"
 Displays the help message
@@ -114,21 +115,21 @@ Report encoutered files that have an outated or missing checksum.
 Retag a whole directory and record everything to the database:
 .RS
 .nf
-\fBshatag -pqrt .\fP
+\fBshatag \-pqrt .\fP
 .fi
 .RE
 .LP
 Check files in the current directory for remote duplicates:
 .RS
 .nf
-\fBshatag -l\fP
+\fBshatag \-l\fP
 .fi
 .RE
 .LP
 Show alternate locations for duplicates of a single file:
 .RS
 .nf
-\fBshatag -L somefile\fP
+\fBshatag \-L somefile\fP
 .fi
 .RE
 
