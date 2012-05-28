@@ -1,5 +1,5 @@
-shatag (0.3.1-1) UNRELEASED; urgency=low
+shatag (0.4-1) unstable; urgency=low
 
   * Initial release. (Closes: #664076)
 
- -- Didier Raboud <odyx@debian.org>  Thu, 15 Mar 2012 15:22:58 +0100
+ -- Didier Raboud <odyx@debian.org>  Mon, 28 May 2012 10:56:31 +0200
