@@ -14,7 +14,8 @@ X-Python-Version: none
 
 Package: shatag
 Architecture: all
-Depends: ${misc:Depends}, ${python3:Depends}, python3-pyxattr
+Depends: ${misc:Depends}, ${python3:Depends},
+ python3-pyxattr
 Description: tool to store file checksums in extended attributes, and work with them
  Shatag is a tool for computing and caching file checksums, and do
  remote duplicate detection. Files are compared on their SHA-256 hash to
