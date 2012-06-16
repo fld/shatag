@@ -1,3 +1,11 @@
+shatag (0.4-2) unstable; urgency=low
+
+  * Add missing dependencies:
+    - python3-yaml, for shatag. (Closes: #677585)
+    - python3-pyinotify, for shatagd. (Closes: #677640)
+
+ -- Didier Raboud <odyx@debian.org>  Sat, 16 Jun 2012 13:22:54 +0200
+
 shatag (0.4-1) unstable; urgency=low
 
   * Initial release. (Closes: #664076)
