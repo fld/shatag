@@ -1,4 +1,4 @@
-shatag (0.4-3) unstable; urgency=low
+shatag (0.4-3) experimental; urgency=low
 
   [ Dmitrijs Ledkovs ]
   * Use python3 shebang. (Closes: #692290)
