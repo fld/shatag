@@ -7,7 +7,7 @@ shatag (0.4-4) unstable; urgency=low
 
   [ Jakub Wilk ]
   * Don't use dh_auto_* tools to avoid trying to run setup.py with
-    python2.x, which is not supported. (Closes: #683551)
+    python2.x, which is not supported. (Closes: #707026)
 
  -- Didier Raboud <odyx@debian.org>  Tue, 07 May 2013 08:59:37 +0200
 
