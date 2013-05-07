@@ -10,7 +10,6 @@ Vcs-Browser: http://anonscm.debian.org/gitweb/?p=collab-maint/shatag.git
 Homepage: https://bitbucket.org/maugier/shatag
 Standards-Version: 3.9.3
 X-Python3-Version: >= 3.2
-X-Python-Version: none
 
 Package: shatag
 Architecture: all
