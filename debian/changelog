@@ -1,3 +1,10 @@
+shatag (0.4.1-2) unstable; urgency=low
+
+  * Fix automatic dependency against non-existant python3-xattr
+    (Closes: #730199)
+
+ -- Didier Raboud <odyx@debian.org>  Tue, 26 Nov 2013 09:57:28 +0100
+
 shatag (0.4.1-1) unstable; urgency=low
 
   * New 0.4.1 upstream release
