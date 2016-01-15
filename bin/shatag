@@ -21,6 +21,7 @@ parser.add_argument('-r','--recursive', action='store_true', help='inspect direc
 parser.add_argument('-0','--null', action='store_true', help='separate output records with NULLs instead of newlines')
 parser.add_argument('-l','--lookup', action='store_true', help='look up files in the database, color/symbol-code them')
 parser.add_argument('-L','--lookup-verbose', action='store_true', help='verbosely list duplicate locations')
+parser.add_argument('-s','--scrub', action='store_true', help='find corrupted files with invalid checksums')
 parser.add_argument('-p','--put', action='store_true', help='add tags to database')
 parser.add_argument('-d','--database', metavar='DB', help='database path for -l/-L mode', default=config.database)
 parser.add_argument('-b','--backend', metavar='BACKEND', help='backend for local tag storage', default=config.backend)
@@ -39,7 +40,7 @@ if args.files == []:
                                       and not x.startswith('.'), os.listdir('.'))
 
 
-if (args.quiet and (not args.verbose) and not (args.update or args.tag or args.put)):
+if (args.quiet and (not args.verbose) and not (args.update or args.tag or args.put or args.scrub)):
     print ('shatag: Warning: this combination of flags does not do anything.', file=sys.stderr)
     exit(1)
 
@@ -73,6 +74,9 @@ def process(filename):
         if args.verbose:
             file.verbose()
 
+        if args.scrub:
+            file.scrub()
+
         if args.force and (args.update or args.tag):
             file.rehash()
 
@@ -102,7 +106,7 @@ def process(filename):
             pass
 
     except IOError as e:
-        print ('shatag: "{0}": IOError {1}: {2}'.format(filename, e.errno, e.strerror), file=sys.stderr) 
+        print ('shatag: "{0}": IOError {1}: {2}'.format(filename, e.errno, e.strerror), file=sys.stderr)
         if e.errno == 32:
             raise
         if e.errno == 95:
@@ -116,7 +120,7 @@ for filename in args.files:
     process(filename)
 
 if args.put:
-	store.commit()
+    store.commit()
 
 if unsupported:
     print ('shatag: Did you forget to enable user_xattr ?', file=sys.stderr)

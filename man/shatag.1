@@ -96,6 +96,13 @@ or
 .B \-L
 , This is used to restrict the set of remote names to consider. If present, other storages will be ignored.
 
+.IP "\fB\-s, \-\-scrub\fP"
+Find corrupted files by recomputing checksums and comparing them against existing tags.
+A file is considered corrupt if its tag contains a matching timestamp with a non-matching checksum.
+Corrupted files are reported and no tag updates will be performed to these files.
+Files with no checksum or outdated checksum are tagged and updated respectively, meaning that the
+use of this option implies --tag
+
 .IP "\fB\-t, \-\-tag\fP"
 Compute new checksums for files that don't have one, or when it is outdated.
 

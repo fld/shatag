@@ -81,14 +81,12 @@ class IFile(object):
         else:
             raise NoChecksum()
 
-
     def verbose(self, canonical=False):
         """Print warnings if the checksum is missing or outdated"""
         if self.state == 'missing':
             print('<missing>  {0}'.format(self.path(canonical)), file=sys.stderr)
         if self.state == 'bad':
             print('<outdated>  {0}'.format(self.path(canonical)), file=sys.stderr)
-
 
     def rehash(self, canonical=False):
         """Rehash the file and store the new checksum and timestamp"""
@@ -99,6 +97,20 @@ class IFile(object):
         self.shatag = newsum
         self.write()
         self.state = 'good'
+
+    def scrub(self, canonical=False):
+        """Rehash the file and store new checksum and timestamp for uncorrupted
+        files only and report about corrupted files"""
+        self.ts = self.mtime
+        newsum = hashfile(self.filename)
+        if self.state == 'good' and newsum != self.shatag:
+            print('<invalid>  {0}'.format(self.path(canonical)), file=sys.stderr)
+            print(' tag says: '+self.shatag, file=sys.stderr)
+            print(' got     : '+newsum, file=sys.stderr)
+        else:
+            self.shatag = newsum
+            self.write()
+            self.state = 'good'
 
 
 def Store(url=None, name=None):
